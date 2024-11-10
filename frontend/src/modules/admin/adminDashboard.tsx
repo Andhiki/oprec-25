@@ -26,7 +26,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   // Helper function to find dipilihOleh and jam from sesi (now supports an array of user IDs)
   const getDipilihOlehAndJam = (sesi: any[], userId: string) => {
     const sesiMatched = sesi?.find((sesiItem) =>
-      sesiItem.dipilihOleh?.includes(userId)
+      sesiItem.dipilihOleh?.includes(userId),
     );
     if (sesiMatched) {
       return { dipilihOleh: sesiMatched.dipilihOleh, jam: sesiMatched.jam };
@@ -46,7 +46,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ userId, acceptDivisionId }),
-        }
+        },
       );
 
       toast({
@@ -75,48 +75,70 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   };
 
   return (
-    <div className="min-h-screen bg-custom-black text-custom-silver">
+    <div className="min-h-screen space-y-4 bg-custom-black text-custom-silver">
       {/* Header */}
-      <div className="mb-4">
-        <div className="flex items-center gap-4">
-          <Image
-            src={Logos[admin.username as keyof typeof Logos]}
-            alt=""
-            width={0}
-            height={0}
-            className="w-[2rem] sm:w-[3rem]"
-          />
-          <h1 className="flex h-full items-center text-[2rem] font-semibold sm:text-[3rem]">
-            {admin.username.toUpperCase()}
-          </h1>
-        </div>
+      <div className="flex items-center gap-4">
+        <Image
+          src={Logos[admin.username as keyof typeof Logos]}
+          alt=""
+          width={0}
+          height={0}
+          className="w-[2rem] sm:w-[3rem]"
+        />
+        <h1 className="flex h-full items-center text-[2rem] font-semibold sm:text-[3rem]">
+          {admin.username.toUpperCase()}
+        </h1>
+      </div>
+
+      <div className="flex w-full max-w-xs justify-between rounded-md bg-custom-gray-dark p-3 sm:ml-auto">
+        <h1>
+          <span className="font-medium text-custom-lavender">Status</span>{" "}
+          Pendaftar
+        </h1>
+        <h1 className="font-bold">{allUsers.length}</h1>
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto rounded-lg bg-custom-gray-dark">
-        <div className="px-6 py-4 text-lg font-medium">Informasi Pendaftar</div>
+        <div className="px-6 py-4 text-lg font-semibold">
+          Informasi Pendaftar
+        </div>
         <table className="w-full">
           <thead>
             <tr className="bg-custom-gray *:px-6 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold">
               <th>No</th>
-              <th>Name</th>
+              <th>Nama</th>
+              <th>
+                Tanggal Wawancara{" "}
+                <span className="text-custom-blue">HIMAKOM</span>
+              </th>
+              <th>
+                Tanggal Wawancara{" "}
+                <span className="text-custom-orange">OMAHTI</span>
+              </th>
               <th>Penugasan</th>
               <th>Status Penerimaan</th>
-              <th>Tanggal Pilihan Hima</th>
-              <th>Tanggal Pilihan OTI</th>
             </tr>
           </thead>
           <tbody>
             {allUsers && allUsers.length > 0 ? (
               allUsers.map((user: any, index: number) => {
                 // Get dipilihOleh and jam for both tanggalPilihanHima and tanggalPilihanOti
-                const { dipilihOleh: dipilihHima, jam: jamHima } = user.tanggalPilihanHima
-                  ? getDipilihOlehAndJam(user.tanggalPilihanHima.tanggalId.sesi, user._id)
-                  : { dipilihOleh: null, jam: null };
+                const { dipilihOleh: dipilihHima, jam: jamHima } =
+                  user.tanggalPilihanHima
+                    ? getDipilihOlehAndJam(
+                        user.tanggalPilihanHima.tanggalId.sesi,
+                        user._id,
+                      )
+                    : { dipilihOleh: null, jam: null };
 
-                const { dipilihOleh: dipilihOti, jam: jamOti } = user.tanggalPilihanOti
-                  ? getDipilihOlehAndJam(user.tanggalPilihanOti.tanggalId.sesi, user._id)
-                  : { dipilihOleh: null, jam: null };
+                const { dipilihOleh: dipilihOti, jam: jamOti } =
+                  user.tanggalPilihanOti
+                    ? getDipilihOlehAndJam(
+                        user.tanggalPilihanOti.tanggalId.sesi,
+                        user._id,
+                      )
+                    : { dipilihOleh: null, jam: null };
 
                 return (
                   <tr
@@ -125,6 +147,22 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                   >
                     <td>{index + 1}</td>
                     <td>{user.username}</td>
+                    {/* Tanggal Pilihan Hima */}
+                    <td>
+                      {dipilihHima ? (
+                        <>{formatDate(jamHima)}</>
+                      ) : (
+                        <p className="opacity-50">Belum memilih</p>
+                      )}
+                    </td>
+                    {/* Tanggal Pilihan OTI */}
+                    <td>
+                      {dipilihOti ? (
+                        <>{formatDate(jamOti)}</>
+                      ) : (
+                        <p className="opacity-50">Belum memilih</p>
+                      )}
+                    </td>
                     <td className="">
                       {user.tugas.length > 0 ? (
                         <Link
@@ -132,13 +170,19 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                           target="_blank"
                           rel="noreferrer noopener"
                         >
-                          <Button size={`lg`} variant={`white`}>
-                            <EyeIcon size={16} />
-                            Lihat
+                          <Button
+                            size={`sm`}
+                            variant={`white`}
+                            className="max-w-32 truncate rounded-full"
+                          >
+                            <EyeIcon size={14} className="mr-1 shrink-0" />
+                            <span className="truncate">
+                              {user.tugas[0].link.replace(/^https?:\/\//, "")}
+                            </span>
                           </Button>
                         </Link>
                       ) : (
-                        <p className="text-sm text-custom-red opacity-80">
+                        <p className="text-sm opacity-50">
                           Belum ada penugasan
                         </p>
                       )}
@@ -156,7 +200,10 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                         >
                           {pending ? (
                             <>
-                              <LoaderCircle size={16} className="animate-spin" />
+                              <LoaderCircle
+                                size={16}
+                                className="animate-spin"
+                              />
                               Approving...
                             </>
                           ) : (
@@ -168,32 +215,12 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                         </Button>
                       ) : (
                         <p className="text-sm">
-                          User sudah diterima di{" "}
+                          Sudah diterima di{" "}
                           <span className="text-custom-orange">
                             {" "}
                             {user.diterimaDi.judul}
                           </span>
                         </p>
-                      )}
-                    </td>
-                    {/* Tanggal Pilihan Hima */}
-                    <td className="text-sm text-center">
-                      {dipilihHima ? (
-                        <>
-                          {formatDate(jamHima)}
-                        </>
-                      ) : (
-                        "Tidak ada pemilih"
-                      )}
-                    </td>
-                    {/* Tanggal Pilihan OTI */}
-                    <td className="text-sm text-center">
-                      {dipilihOti ? (
-                        <>
-                          {formatDate(jamOti)}
-                        </>
-                      ) : (
-                        "Tidak ada pemilih"
                       )}
                     </td>
                   </tr>

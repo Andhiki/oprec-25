@@ -38,7 +38,7 @@ const Footer = () => {
 
             {/* Right Section */}
             <Link
-              href="https://www.instagram.com/sultandevin"
+              href="https://linktr.ee/MAKOMTISocialMedia"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 lg:mr-24"
