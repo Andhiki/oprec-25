@@ -6,6 +6,9 @@ import { EyeIcon, LoaderCircle, UserRoundCheck } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import NumberTicker from "@/components/ui/number-ticker";
+import { BorderBeam } from "@/components/ui/border-beam";
+import HyperText from "@/components/ui/hyper-text";
 
 const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   const [pending, setPending] = useState(false);
@@ -83,19 +86,33 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
           alt=""
           width={0}
           height={0}
-          className="w-[2rem] sm:w-[3rem]"
+          className="w-[2.5rem] sm:w-[3rem]"
         />
-        <h1 className="flex h-full items-center text-[2rem] font-semibold sm:text-[3rem]">
-          {admin.username.toUpperCase()}
-        </h1>
+
+        {/* page title */}
+        <HyperText
+          text={admin.username}
+          className="font-poppins-semibold text-[2.5rem] sm:text-[3rem]"
+        />
       </div>
 
-      <div className="flex w-full max-w-xs justify-between rounded-md bg-custom-gray-dark p-3 sm:ml-auto">
-        <h1>
-          <span className="font-medium text-custom-lavender">Status</span>{" "}
-          Pendaftar
-        </h1>
-        <h1 className="font-bold">{allUsers.length}</h1>
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
+        <h2 className="text-custom-silver/80">
+          Penerimaan pendaftar ke dalam divisi akan dilakukan saat{" "}
+          <span className="font-semibold text-custom-silver">Mubes.</span>
+        </h2>
+        <div className="relative flex w-full justify-between rounded-md bg-custom-gray-dark p-3 sm:max-w-xs">
+          <h1>
+            <span className="font-medium text-custom-lavender">Status</span>{" "}
+            Pendaftar
+          </h1>
+          <NumberTicker
+            value={allUsers.length}
+            className="font-bold text-custom-silver"
+          />
+
+          <BorderBeam />
+        </div>
       </div>
 
       {/* Table */}
@@ -105,19 +122,19 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
         </div>
         <table className="w-full">
           <thead>
-            <tr className="bg-custom-gray *:px-6 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold">
-              <th>No</th>
-              <th>Nama</th>
-              <th>
+            <tr className="bg-custom-gray *:px-6 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold *:transition-all">
+              <th className="hover:bg-custom-black/10">No</th>
+              <th className="hover:bg-custom-black/10">Nama</th>
+              <th className="hover:bg-custom-black/10">
                 Tanggal Wawancara{" "}
                 <span className="text-custom-blue">HIMAKOM</span>
               </th>
-              <th>
+              <th className="hover:bg-custom-black/10">
                 Tanggal Wawancara{" "}
                 <span className="text-custom-orange">OMAHTI</span>
               </th>
-              <th>Penugasan</th>
-              <th>Status Penerimaan</th>
+              <th className="hover:bg-custom-black/10">Penugasan</th>
+              <th className="hover:bg-custom-black/10">Status Penerimaan</th>
             </tr>
           </thead>
           <tbody>
@@ -143,7 +160,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                 return (
                   <tr
                     key={user._id}
-                    className="border-t border-gray-700 *:px-6 *:py-4 *:text-sm"
+                    className="border-t border-gray-700 transition-all *:px-6 *:py-4 *:text-sm hover:bg-custom-black/20"
                   >
                     <td>{index + 1}</td>
                     <td>{user.username}</td>

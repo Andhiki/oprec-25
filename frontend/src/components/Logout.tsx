@@ -40,7 +40,7 @@ export default function Logout({ className }: { className?: string }) {
       router.refresh();
       toast({
         title: "Logout Berhasil",
-        description: "Anda telah keluar dari akun",
+        description: "Anda telah keluar dari akun Anda.",
       });
     } catch (error) {
       toast({
