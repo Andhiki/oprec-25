@@ -65,7 +65,6 @@ const Page = async ({ params }: DivisiPageProps) => {
               {/* Status */}
               <Progress
                 progress={divisiData.dipilihOleh.length}
-                slots={divisiData.slot}
                 params={params.divisi}
               />
             </div>
