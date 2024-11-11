@@ -282,18 +282,18 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
 
                     {/* Tanggal Pilihan Hima */}
                     <td>
-                      {dipilihHima ? (
+                      {(dipilihHima && user.enrolledSlugHima === admin.username)? (
                         <>{formatDate(jamHima)}</>
                       ) : (
-                        <p className="opacity-50">Belum memilih</p>
+                        <p className="opacity-50">Tidak Ada</p>
                       )}
                     </td>
                     {/* Tanggal Pilihan OTI */}
                     <td>
-                      {dipilihOti ? (
+                      {(dipilihOti && user.enrolledSlugOti === admin.username) ? (
                         <>{formatDate(jamOti)}</>
                       ) : (
-                        <p className="opacity-50">Belum memilih</p>
+                        <p className="opacity-50">Tidak Ada</p>
                       )}
                     </td>
                     <td className="">
