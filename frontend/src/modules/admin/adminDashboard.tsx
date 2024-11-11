@@ -141,7 +141,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                             size="lg"
                             variant="whiteOutline"
                             onClick={() => handleApprove(user._id, selectedDivision)}
-                            disabled={!selectedDivision || pending}
+                            disabled
                           >
                             {pending ? (
                               <>
