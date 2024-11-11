@@ -13,7 +13,16 @@ import HyperText from "@/components/ui/hyper-text";
 const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   const [pending, setPending] = useState(false);
   const { toast } = useToast();
-  const [selectedDivision, setSelectedDivision] = useState("");
+  const [selectedDivision, setSelectedDivision] = useState<{ [userId: string]: string }>({});
+  const mubesDate = new Date("2024-11-30T00:00:00.000Z");
+  const currentDate = Date.now();
+  const currentDateParah = new Date(currentDate);
+  const handleDivisionChange = (userId: string, divisionId: string) => {
+    setSelectedDivision((prev) => ({
+      ...prev,
+      [userId]: divisionId,
+    }));
+  };
   // Helper function to format the date
   const formatDate = (isoString: Date) => {
     const date = new Date(isoString);
@@ -78,98 +87,122 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   };
   if (admin.username === "MAKOMTI") {
     return (
-      <div className="min-h-screen bg-custom-black text-custom-silver">
+      <div className="min-h-screen bg-custom-black text-custom-silver p-6 sm:p-8">
         {/* Header */}
-        <div className="mb-4">
+        <div className="mb-8">
           <div className="flex items-center gap-4">
-            <h1 className="flex h-full items-center text-[2rem] font-semibold sm:text-[3rem]">
-              {admin.username.toUpperCase()}
+            <h1 className="text-3xl sm:text-4xl font-semibold flex items-center">
+              <span className="text-custom-lavender">MAKOM</span>
+              <span className="text-custom-orange">TI</span>
             </h1>
           </div>
         </div>
-
-        {/* Table for MAKOMTI admin */}
-        <div className="overflow-x-auto rounded-lg bg-custom-gray-dark">
-          <div className="px-6 py-4 text-lg font-medium">Informasi Pendaftar</div>
-          <table className="w-full">
-            <thead>
-              <tr className="bg-custom-gray *:px-6 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold">
-                <th>No</th>
-                <th>Username</th>
-                <th>Divisi Pilihan</th>
-                <th>Diterima Di</th>
+    
+        {/* Status Section */}
+        <div className="relative flex w-full justify-between rounded-md bg-custom-gray-dark p-4 sm:max-w-xs mb-8">
+          <h1 className="font-medium text-custom-lavender">Semua User</h1>
+          <NumberTicker value={allUsers.length} className="font-bold text-custom-silver" />
+          <BorderBeam />
+        </div>
+    
+        {/* Table Section */}
+        <div className="overflow-x-auto rounded-lg bg-custom-gray-dark shadow-md">
+          <div className="px-6 py-4 text-lg font-medium border-b border-gray-700">Informasi Pendaftar</div>
+          <table className="min-w-full divide-y divide-gray-700">
+            <thead className="bg-custom-gray text-start text-sm font-semibold">
+              <tr>
+                <th className="px-4 py-3">No</th>
+                <th className="px-4 py-3">Username</th>
+                <th className="px-4 py-3">Divisi Pilihan</th>
+                <th className="px-4 py-3">Tanggal Wawancara <span className="text-custom-lavender">HIMAKOM</span></th>
+                <th className="px-4 py-3">Tanggal Wawancara <span className="text-custom-orange">OMAHTI</span></th>
+                <th className="px-4 py-3">Diterima Di</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-700 text-sm">
               {allUsers && allUsers.length > 0 ? (
-                allUsers.map((user: any, index: number) => (
-                  <tr key={user._id} className="border-t border-gray-700 *:px-6 *:py-4 *:text-sm">
-                    <td>{index + 1}</td>
-                    {user.isAdmin ? <td>ADMIN {(user.username).toUpperCase()}</td> : <td>{user.username}</td>}
-                    <td>
-                      {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
-                        <ul>  
-                          {user.divisiPilihan.map((divisi: any) => (
-                            <li key={divisi._id}>
-                              {divisi.divisiId?.slug.toUpperCase()}: {divisi.urutanPrioritas}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-sm text-custom-red opacity-80">Belum memilih divisi</p>
-                      )}
-                    </td>
-                    <td className="px-6 py-4">
-                      {!user.diterimaDi ? (
-                        <div className="flex items-center gap-2">
-                          {/* Dropdown to select division */}
-                          <select
-                            className="rounded border border-gray-300 bg-custom-gray-dark p-2 text-sm text-custom-silver"
-                            value={selectedDivision}
-                            onChange={(e) => setSelectedDivision(e.target.value)}
-                          >
-                            <option value="">Pilih divisi...</option>
+                allUsers.map((user: any, index: number) => {
+                  const { dipilihOleh: dipilihHima, jam: jamHima } = user.tanggalPilihanHima
+                    ? getDipilihOlehAndJam(user.tanggalPilihanHima.tanggalId.sesi, user._id)
+                    : { dipilihOleh: null, jam: null };
+    
+                  const { dipilihOleh: dipilihOti, jam: jamOti } = user.tanggalPilihanOti
+                    ? getDipilihOlehAndJam(user.tanggalPilihanOti.tanggalId.sesi, user._id)
+                    : { dipilihOleh: null, jam: null };
+    
+                  return (
+                    <tr key={user._id} className="hover:bg-custom-black/10">
+                      <td className="px-4 py-4">{index + 1}</td>
+                      <td className="px-4 py-4">{user.isAdmin ? `ADMIN ${user.username.toUpperCase()}` : user.username}</td>
+                      <td className="px-4 py-4">
+                        {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
+                          <ul className="list-disc list-inside space-y-1">
                             {user.divisiPilihan.map((divisi: any) => (
-                              <option key={divisi._id} value={divisi.divisiId?._id}>
-                                {divisi.divisiId?.judul}
-                              </option>
+                              <li key={divisi._id}>
+                                {(divisi.divisiId?.slug).toUpperCase()} :{" "}
+                              <span className={divisi.divisiId.himakom ? "text-custom-lavender": "text-custom-orange"}>{divisi.urutanPrioritas}</span>
+                              </li>
                             ))}
-                          </select>
-
-                          {/* Approve button */}
-                          <Button
-                            size="lg"
-                            variant="whiteOutline"
-                            onClick={() => handleApprove(user._id, selectedDivision)}
-                            disabled
-                          >
-                            {pending ? (
-                              <>
-                                <LoaderCircle size={16} className="animate-spin" />
-                                Approving...
-                              </>
-                            ) : (
-                              <>
-                                <UserRoundCheck size={16} />
-                                Terima ke divisi
-                              </>
-                            )}
-                          </Button>
-                        </div>
-                      ) : (
-                        <p className="text-sm">
-                          Sudah diterima di{" "}
-                          <span className="text-custom-orange">{user.diterimaDi.judul}</span>
-                        </p>
-                      )}
-                    </td>
-                  </tr>
-                ))
+                          </ul>
+                        ) : (
+                          <p className="text-custom-red opacity-80">Belum memilih divisi</p>
+                        )}
+                      </td>
+                      <td className="px-4 py-4">
+                        {dipilihHima ? formatDate(jamHima) : <p className="opacity-50">Belum memilih</p>}
+                      </td>
+                      <td className="px-4 py-4">
+                        {dipilihOti ? formatDate(jamOti) : <p className="opacity-50">Belum memilih</p>}
+                      </td>
+                      <td className="px-4 py-4">
+                        {!user.diterimaDi ? (
+                          <div className="flex flex-col items-center gap-2">
+                            {/* Division Selection Dropdown */}
+                            <select
+                              className="w-36 rounded-md border border-gray-300 bg-custom-gray-dark p-2 text-sm text-custom-silver"
+                              value={selectedDivision[user._id] || ""}
+                              onChange={(e) => handleDivisionChange(user._id, e.target.value)}
+                            >
+                              <option className="text-center" value="">Pilih divisi</option>
+                              {user.divisiPilihan.map((divisi: any) => (
+                                <option key={divisi._id} value={divisi.divisiId?._id}>
+                                  {divisi.divisiId?.judul}
+                                </option>
+                              ))}
+                            </select>
+    
+                            {/* Approve Button */}
+                            <Button
+                              size="lg"
+                              variant="whiteOutline"
+                              onClick={() => handleApprove(user._id, selectedDivision[user._id])}
+                              disabled={ currentDateParah < mubesDate || pending || !selectedDivision[user._id]}
+                            >
+                              {pending ? (
+                                <>
+                                  <LoaderCircle size={16} className="animate-spin" />
+                                  Approving...
+                                </>
+                              ) : (
+                                <>
+                                  <UserRoundCheck size={16} />
+                                  Approve User Ke Divisi
+                                </>
+                              )}
+                            </Button>
+                          </div>
+                        ) : (
+                          <p className="text-sm">
+                            Sudah diterima di <span className="text-custom-orange">{user.diterimaDi.judul}</span>
+                          </p>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
               ) : (
                 <tr>
-                  <td colSpan={3} className="px-6 py-4 text-center text-gray-500">
-                    Belum ada pendaftar.
-                  </td>
+                  <td colSpan={6} className="px-6 py-4 text-center text-gray-500">Belum ada pendaftar.</td>
                 </tr>
               )}
             </tbody>
@@ -177,7 +210,9 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
         </div>
       </div>
     );
+    
   }
+  
   return (
     <div className="min-h-screen space-y-4 bg-custom-black text-custom-silver">
       {/* Header */}
@@ -282,18 +317,18 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
 
                     {/* Tanggal Pilihan Hima */}
                     <td>
-                      {(dipilihHima && user.enrolledSlugHima === admin.username)? (
+                      {dipilihHima && user.enrolledSlugHima === admin.username? (
                         <>{formatDate(jamHima)}</>
                       ) : (
-                        <p className="opacity-50">Tidak Ada</p>
+                        <p className="opacity-50">Belum memilih</p>
                       )}
                     </td>
                     {/* Tanggal Pilihan OTI */}
                     <td>
-                      {(dipilihOti && user.enrolledSlugOti === admin.username) ? (
+                      {dipilihOti && user.enrolledSlugOti === admin.username ? (
                         <>{formatDate(jamOti)}</>
                       ) : (
-                        <p className="opacity-50">Tidak Ada</p>
+                        <p className="opacity-50">Belum memilih</p>
                       )}
                     </td>
                     <td className="">
