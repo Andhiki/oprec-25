@@ -115,14 +115,14 @@ const Penugasan = ({
         </div>
 
         <div className="flex flex-col gap-1">
-          <h1 className="font-semibold">Keperluan</h1>
+          <h1 className="font-semibold">Penugasan</h1>
           <Link
             href={data.penugasan.linkPenugasan}
             target="_blank"
             rel="noopener noreferrer"
           >
             <Button size={`lg`} className="w-full text-base">
-              <Download className="mr-2 h-5 w-5" /> Download Keperluan
+              <Download className="mr-2 h-5 w-5" /> Download Penugasan
             </Button>
           </Link>
         </div>
