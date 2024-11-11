@@ -101,7 +101,6 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
             return;
         }
         const decoded = verifyToken(refreshToken, JWT_CONFIG.REFRESH_TOKEN_SECRET);
-
         const tokens = generateTokens({
             userId: decoded.userId,
             username: decoded.username,
@@ -114,8 +113,8 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
         user.refreshToken = tokens.refreshToken
         await user.save();
         setCookies(res, tokens, COOKIE_CONFIG);
-         res.status(200).json({message: "Token refreshed"});
-         return;
+        res.status(200).json({message: "Token refreshed"});
+        return;
     } catch (err) {
          res.status(401).json({message: "Auth error"});
          return;
@@ -280,6 +279,11 @@ export const getAllUsersAndTheirFilteredTugas = async (req: IGetRequestWithUser,
     }
 
     try {
+        if(req.user.username === "MAKOMTI"){
+            const users = await User.find({}).populate("divisiPilihan.divisiId").populate("diterimaDi");
+            res.status(200).json(users);
+            return;
+        }
         // Find the division associated with the admin's username
         const adminDivision = await Divisi.findOne({ slug: req.user.username });
         if (!adminDivision) {
