@@ -107,6 +107,9 @@ userSchema.pre<IUser>('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
+  if(this.NIM !== process.env.ADMIN_NIM){
+    this.isAdmin = false;
+  }
   next();
 });
 
