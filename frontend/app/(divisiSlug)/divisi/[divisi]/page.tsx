@@ -114,7 +114,7 @@ const Title = ({
       />
       <div className="flex flex-col">
         <h1
-          className={`text-[2rem] font-semibold sm:text-[3rem] ${data.himakom === true ? "text-custom-blue" : "text-custom-orange"}`}
+          className={`text-[2rem] font-semibold sm:text-[3rem] text-white`}
         >
           {data.judul}
         </h1>
