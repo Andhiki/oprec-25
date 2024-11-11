@@ -87,7 +87,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   };
   if (admin.username === "MAKOMTI") {
     return (
-      <div className="min-h-screen bg-custom-black text-custom-silver">
+      <div className="min-h-screen bg-custom-black text-custom-silver p-6 sm:p-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-4">
