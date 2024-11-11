@@ -85,6 +85,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
       setPending(false);
     }
   };
+
   if (admin.username === "MAKOMTI") {
     return (
       <div className="min-h-screen bg-custom-black text-custom-silver p-6 sm:p-8">

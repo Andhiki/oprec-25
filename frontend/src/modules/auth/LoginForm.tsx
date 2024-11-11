@@ -121,16 +121,16 @@ const LoginForm = () => {
               autoComplete="off"
               className={`w-full rounded-lg border border-white/10 bg-black/10 px-4 py-2 text-white placeholder-custom-gray-light focus:border-custom-blue focus:outline-none focus:ring-1 focus:ring-custom-blue ${errors.password && "border-red-500"}`}
             />
-            {errors.password && (
-              <p className="flex gap-1.5 text-sm text-red-500">
-                <Info size={10} className="mt-1 shrink-0" /> Invalid password.
-              </p>
-            )}
             <span className="absolute right-1 top-1/2 -translate-y-1/2">
               <div className="cursor-pointer p-2 text-custom-silver" onClick={() => setHide(!hide)}>
                 {hide ? <EyeOff size={18} /> : <Eye size={18} />}
               </div>
             </span>
+            {errors.password && (
+              <p className="mt-2 flex gap-1.5 text-sm text-red-500">
+                <Info size={10} className="mt-1 shrink-0" /> Invalid password.
+              </p>
+            )}
           </div>
         </div>
 

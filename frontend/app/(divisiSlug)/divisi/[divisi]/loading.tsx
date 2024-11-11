@@ -20,7 +20,7 @@ const Loading = () => {
               </div>
             </div>
             {/* Status box skeleton */}
-            <Skeleton className="h-32 w-64 bg-custom-gray-dark" />
+            <Skeleton className="h-32 w-full md:w-64 bg-custom-gray-dark" />
           </div>
 
           {/* About section skeleton */}

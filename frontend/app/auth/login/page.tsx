@@ -31,7 +31,7 @@ const Logos = () => (
 );
 
 const RedirectBox = () => (
-  <div className="mt-8 flex w-full items-center justify-center rounded-sm  bg-custom-gray-dark/50 p-2">
+  <div className="mt-8 text-center flex w-full items-center justify-center rounded-sm  bg-custom-gray-dark/50 p-2">
     <span className="font-medium">
       Don&apos;t have an account?{" "}
       <Link href="/auth/register" className="text-blue-500 hover:underline">
