@@ -13,7 +13,7 @@ import HyperText from "@/components/ui/hyper-text";
 const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   const [pending, setPending] = useState(false);
   const { toast } = useToast();
-
+  const [selectedDivision, setSelectedDivision] = useState("");
   // Helper function to format the date
   const formatDate = (isoString: Date) => {
     const date = new Date(isoString);
@@ -76,7 +76,108 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
       setPending(false);
     }
   };
+  if (admin.username === "MAKOMTI") {
+    return (
+      <div className="min-h-screen bg-custom-black text-custom-silver">
+        {/* Header */}
+        <div className="mb-4">
+          <div className="flex items-center gap-4">
+            <h1 className="flex h-full items-center text-[2rem] font-semibold sm:text-[3rem]">
+              {admin.username.toUpperCase()}
+            </h1>
+          </div>
+        </div>
 
+        {/* Table for MAKOMTI admin */}
+        <div className="overflow-x-auto rounded-lg bg-custom-gray-dark">
+          <div className="px-6 py-4 text-lg font-medium">Informasi Pendaftar</div>
+          <table className="w-full">
+            <thead>
+              <tr className="bg-custom-gray *:px-6 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold">
+                <th>No</th>
+                <th>Username</th>
+                <th>Divisi Pilihan</th>
+                <th>Diterima Di</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allUsers && allUsers.length > 0 ? (
+                allUsers.map((user: any, index: number) => (
+                  <tr key={user._id} className="border-t border-gray-700 *:px-6 *:py-4 *:text-sm">
+                    <td>{index + 1}</td>
+                    {user.isAdmin ? <td>ADMIN {(user.username).toUpperCase()}</td> : <td>{user.username}</td>}
+                    <td>
+                      {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
+                        <ul>  
+                          {user.divisiPilihan.map((divisi: any) => (
+                            <li key={divisi._id}>
+                              {divisi.divisiId?.slug.toUpperCase()}: {divisi.urutanPrioritas}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-sm text-custom-red opacity-80">Belum memilih divisi</p>
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      {!user.diterimaDi ? (
+                        <div className="flex items-center gap-2">
+                          {/* Dropdown to select division */}
+                          <select
+                            className="rounded border border-gray-300 bg-custom-gray-dark p-2 text-sm text-custom-silver"
+                            value={selectedDivision}
+                            onChange={(e) => setSelectedDivision(e.target.value)}
+                          >
+                            <option value="">Pilih divisi...</option>
+                            {user.divisiPilihan.map((divisi: any) => (
+                              <option key={divisi._id} value={divisi.divisiId?._id}>
+                                {divisi.divisiId?.judul}
+                              </option>
+                            ))}
+                          </select>
+
+                          {/* Approve button */}
+                          <Button
+                            size="lg"
+                            variant="whiteOutline"
+                            onClick={() => handleApprove(user._id, selectedDivision)}
+                            disabled={!selectedDivision || pending}
+                          >
+                            {pending ? (
+                              <>
+                                <LoaderCircle size={16} className="animate-spin" />
+                                Approving...
+                              </>
+                            ) : (
+                              <>
+                                <UserRoundCheck size={16} />
+                                Terima ke divisi
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      ) : (
+                        <p className="text-sm">
+                          Sudah diterima di{" "}
+                          <span className="text-custom-orange">{user.diterimaDi.judul}</span>
+                        </p>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={3} className="px-6 py-4 text-center text-gray-500">
+                    Belum ada pendaftar.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen space-y-4 bg-custom-black text-custom-silver">
       {/* Header */}
@@ -125,16 +226,16 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
             <tr className="bg-custom-gray *:px-6 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold *:transition-all">
               <th className="hover:bg-custom-black/10">No</th>
               <th className="hover:bg-custom-black/10">Nama</th>
+              <th className="hover:bg-custom-black/10">Divisi Pilihan</th>
               <th className="hover:bg-custom-black/10">
                 Tanggal Wawancara{" "}
-                <span className="text-custom-blue">HIMAKOM</span>
+                <span className="text-custom-lavender">HIMAKOM</span>
               </th>
               <th className="hover:bg-custom-black/10">
                 Tanggal Wawancara{" "}
                 <span className="text-custom-orange">OMAHTI</span>
               </th>
               <th className="hover:bg-custom-black/10">Penugasan</th>
-              <th className="hover:bg-custom-black/10">Status Penerimaan</th>
             </tr>
           </thead>
           <tbody>
@@ -164,6 +265,21 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                   >
                     <td>{index + 1}</td>
                     <td>{user.username}</td>
+                    <td>
+                      {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
+                        <ul>
+                          {user.divisiPilihan.map((divisi: any) => (
+                            <li key={divisi._id}>
+                              {(divisi.divisiId?.slug).toUpperCase()} :{" "}
+                              <span className={divisi.divisiId.himakom ? "text-custom-lavender": "text-custom-orange"}>{divisi.urutanPrioritas}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-sm text-custom-red opacity-80">Belum memilih divisi</p>
+                      )}
+                    </td>
+
                     {/* Tanggal Pilihan Hima */}
                     <td>
                       {dipilihHima ? (
@@ -201,42 +317,6 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                       ) : (
                         <p className="text-sm opacity-50">
                           Belum ada penugasan
-                        </p>
-                      )}
-                    </td>
-                    <td className="">
-                      {!user.diterimaDi ? (
-                        <Button
-                          size={`lg`}
-                          className=""
-                          variant={`whiteOutline`}
-                          onClick={() =>
-                            handleApprove(user._id, user.adminDivision._id)
-                          }
-                          disabled
-                        >
-                          {pending ? (
-                            <>
-                              <LoaderCircle
-                                size={16}
-                                className="animate-spin"
-                              />
-                              Approving...
-                            </>
-                          ) : (
-                            <>
-                              <UserRoundCheck size={16} />
-                              Terima ke divisi
-                            </>
-                          )}
-                        </Button>
-                      ) : (
-                        <p className="text-sm">
-                          Sudah diterima di{" "}
-                          <span className="text-custom-orange">
-                            {" "}
-                            {user.diterimaDi.judul}
-                          </span>
                         </p>
                       )}
                     </td>
