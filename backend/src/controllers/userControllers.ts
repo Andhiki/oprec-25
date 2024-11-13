@@ -280,7 +280,7 @@ export const getAllUsersAndTheirFilteredTugas = async (req: IGetRequestWithUser,
 
     try {
         if(req.user.username === "MAKOMTI"){
-            const users = await User.find({}).populate("divisiPilihan.divisiId").populate("diterimaDi");
+            const users = await User.find({}).populate("divisiPilihan.divisiId").populate("diterimaDi").populate("tanggalPilihanOti.tanggalId").populate("tanggalPilihanHima.tanggalId");
             res.status(200).json(users);
             return;
         }

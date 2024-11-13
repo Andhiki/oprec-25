@@ -4,6 +4,7 @@ import SmoothScrolling from "@/contexts/SmoothScroll";
 import { Poppins } from "next/font/google";
 import GSAPProvider from "@/contexts/GSAP";
 import { Toaster } from "@/components/ui/toaster";
+
 export const metadata: Metadata = {
   title: "Oprec Makomti",
   description: "Open Recruitment Himakom & OmahTI",

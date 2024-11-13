@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Divisi",
-  description: "ISINYA DIVISI DEH",
+  description: "Daftar Divisi HIMAKOM dan OmahTI",
 };
 
 export default function Page(): JSX.Element {

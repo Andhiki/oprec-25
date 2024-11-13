@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { Logos } from "@/utils/types";
 import { Button } from "@/components/ui/button";
-import { EyeIcon, LoaderCircle, UserRoundCheck } from "lucide-react";
+import { ChevronDown, ChevronsUpDown, EyeIcon, LoaderCircle, UserRoundCheck } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -134,7 +134,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                     <tr key={user._id} className="hover:bg-custom-black/10">
                       <td className="px-4 py-4">{index + 1}</td>
                       <td className="px-4 py-4">{user.isAdmin ? `ADMIN ${user.username.toUpperCase()}` : user.username}</td>
-                      <td className="px-4 py-4">
+                      <td className="px-4 py-4 truncate text">
                         {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
                           <ul className="list-disc list-inside space-y-1">
                             {user.divisiPilihan.map((divisi: any) => (
@@ -145,31 +145,35 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                             ))}
                           </ul>
                         ) : (
-                          <p className="text-custom-red opacity-80">Belum memilih divisi</p>
+                          <p className="text-custom-red opacity-80 text-center">Belum memilih divisi</p>
                         )}
                       </td>
-                      <td className="px-4 py-4">
+                      <td className="px-4 py-4 text-center">
                         {dipilihHima ? formatDate(jamHima) : <p className="opacity-50">Belum memilih</p>}
                       </td>
-                      <td className="px-4 py-4">
+                      <td className="px-4 py-4 text-center">
                         {dipilihOti ? formatDate(jamOti) : <p className="opacity-50">Belum memilih</p>}
                       </td>
                       <td className="px-4 py-4">
                         {!user.diterimaDi ? (
-                          <div className="flex flex-col items-center gap-2">
+                          <div className="flex items-center gap-2">
                             {/* Division Selection Dropdown */}
-                            <select
-                              className="w-36 rounded-md border border-gray-300 bg-custom-gray-dark p-2 text-sm text-custom-silver"
-                              value={selectedDivision[user._id] || ""}
-                              onChange={(e) => handleDivisionChange(user._id, e.target.value)}
-                            >
-                              <option className="text-center" value="">Pilih divisi</option>
-                              {user.divisiPilihan.map((divisi: any) => (
-                                <option key={divisi._id} value={divisi.divisiId?._id}>
-                                  {divisi.divisiId?.judul}
-                                </option>
-                              ))}
-                            </select>
+                            <div className="relative w-full min-w-[6.9rem] max-w-[10rem]"> {/* Adjust width here */}
+                              <select
+                                className="w-full text-left truncate rounded-md border border-gray-300 bg-custom-gray-dark py-2 pl-1 pr-6 text-sm text-custom-silver appearance-none"
+                                value={selectedDivision[user._id] || ""}
+                                onChange={(e) => handleDivisionChange(user._id, e.target.value)}
+                              >
+                                <option className="text-center" value="">Pilih divisi</option>
+                                {user.divisiPilihan.map((divisi: any) => (
+                                  <option key={divisi._id} value={divisi.divisiId?._id} className="truncate pl-1">
+                                    {divisi.divisiId?.judul}
+                                  </option>
+                                ))}
+                              </select>
+                              <ChevronDown className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none text-custom-silver h-5 w-5" />
+                            </div>
+
     
                             {/* Approve Button */}
                             <Button
@@ -177,6 +181,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                               variant="whiteOutline"
                               onClick={() => handleApprove(user._id, selectedDivision[user._id])}
                               disabled={ currentDateParah < mubesDate || pending || !selectedDivision[user._id]}
+                              className="p-3"
                             >
                               {pending ? (
                                 <>
@@ -186,7 +191,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                               ) : (
                                 <>
                                   <UserRoundCheck size={16} />
-                                  Approve User Ke Divisi
+                                  
                                 </>
                               )}
                             </Button>
@@ -320,7 +325,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                       {dipilihHima && user.enrolledSlugHima === admin.username? (
                         <>{formatDate(jamHima)}</>
                       ) : (
-                        <p className="opacity-50">Belum memilih</p>
+                        <p className="opacity-50 text-center">Belum memilih</p>
                       )}
                     </td>
                     {/* Tanggal Pilihan OTI */}
@@ -328,7 +333,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                       {dipilihOti && user.enrolledSlugOti === admin.username ? (
                         <>{formatDate(jamOti)}</>
                       ) : (
-                        <p className="opacity-50">Belum memilih</p>
+                        <p className="opacity-50 text-center">Belum memilih</p>
                       )}
                     </td>
                     <td className="">
