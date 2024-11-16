@@ -92,7 +92,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
         <div className="mb-8">
           <div className="flex items-center gap-4">
             <h1 className="text-3xl sm:text-4xl font-semibold flex items-center">
-              <span className="text-custom-lavender">MAKOM</span>
+              <span className="text-custom-blue">MAKOM</span>
               <span className="text-custom-orange">TI</span>
             </h1>
           </div>
@@ -132,9 +132,9 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
     
                   return (
                     <tr key={user._id} className="hover:bg-custom-black/10">
-                      <td className="px-4 py-4">{index + 1}</td>
+                      <td className="px-4 py-4 text-center">{index + 1}</td>
                       <td className="px-4 py-4">{user.isAdmin ? `ADMIN ${user.username.toUpperCase()}` : user.username}</td>
-                      <td className="px-4 py-4 truncate text">
+                      <td className="px-4 py-4 truncate">
                         {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
                           <ul className="list-disc list-inside space-y-1">
                             {user.divisiPilihan.map((divisi: any) => (
@@ -267,15 +267,15 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
               <th className="hover:bg-custom-black/10">No</th>
               <th className="hover:bg-custom-black/10">Nama</th>
               <th className="hover:bg-custom-black/10">Divisi Pilihan</th>
-              <th className="hover:bg-custom-black/10">
+              <th className="hover:bg-custom-black/10 text-center">
                 Tanggal Wawancara{" "}
                 <span className="text-custom-lavender">HIMAKOM</span>
               </th>
-              <th className="hover:bg-custom-black/10">
+              <th className="hover:bg-custom-black/10 text-center">
                 Tanggal Wawancara{" "}
                 <span className="text-custom-orange">OMAHTI</span>
               </th>
-              <th className="hover:bg-custom-black/10">Penugasan</th>
+              <th className="hover:bg-custom-black/10 text-center">Penugasan</th>
             </tr>
           </thead>
           <tbody>
@@ -303,7 +303,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                     key={user._id}
                     className="border-t border-gray-700 transition-all *:px-6 *:py-4 *:text-sm hover:bg-custom-black/20"
                   >
-                    <td>{index + 1}</td>
+                    <td className="text-center">{index + 1}</td>
                     <td>{user.username}</td>
                     <td>
                       {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
@@ -321,7 +321,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                     </td>
 
                     {/* Tanggal Pilihan Hima */}
-                    <td>
+                    <td className="text-center">
                       {dipilihHima && user.enrolledSlugHima === admin.username? (
                         <>{formatDate(jamHima)}</>
                       ) : (
@@ -329,14 +329,14 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                       )}
                     </td>
                     {/* Tanggal Pilihan OTI */}
-                    <td>
+                    <td className="text-center">
                       {dipilihOti && user.enrolledSlugOti === admin.username ? (
                         <>{formatDate(jamOti)}</>
                       ) : (
                         <p className="opacity-50 text-center">Belum memilih</p>
                       )}
                     </td>
-                    <td className="">
+                    <td className="text-center">
                       {user.tugas.length > 0 ? (
                         <Link
                           href={user.tugas[0].link}
