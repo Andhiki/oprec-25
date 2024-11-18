@@ -29,18 +29,23 @@ const PilihanWaktuCard = ({
   const [selectedSlot, setSelectedSlot] = useState<ScheduleSlot | null>(
     pilihan && pilihan.sesi && pilihan.sesi.length > 0
       ? {
-          id: pilihan._id, 
-          sesi: new Date(pilihan.sesi[0].jam), 
-          himakom: variant === 'himakom',
-          sessionId: pilihan.sesi[0]._id
+          id: pilihan._id,
+          sesi: new Date(pilihan.sesi[0].jam),
+          himakom: variant === "himakom",
+          sessionId: pilihan.sesi[0]._id,
         }
-      : null
+      : null,
   );
   const [popupType, setPopupType] = useState<
     "gagal" | "berhasil" | "konfirmasi"
   >("gagal");
 
-  const handleSlotSelect = (id: string, sesi: Date, himakom: boolean, sessionId: string) => {
+  const handleSlotSelect = (
+    id: string,
+    sesi: Date,
+    himakom: boolean,
+    sessionId: string,
+  ) => {
     setSelectedSlot({ id, sesi, himakom, sessionId });
     console.log(selectedSlot);
     setPopupType("konfirmasi");
@@ -61,7 +66,8 @@ const PilihanWaktuCard = ({
 
         {/* Apply pointer-events based on selectedSlot */}
         <Popup
-          disabled={Boolean(pilihan) ?? false}
+          disabled
+          // disabled={Boolean(pilihan) ?? false}
           type={popupType}
           selectedSlot={selectedSlot}
         />
@@ -70,7 +76,8 @@ const PilihanWaktuCard = ({
       {/* Pass selectedSlot and handleSlotSelect to JadwalWawancara */}
       <JadwalWawancara
         variant={variant === "himakom" ? "himakom" : "omahti"}
-        disabled={Boolean(pilihan) ?? false}
+        // disabled={Boolean(pilihan) ?? false}
+        disabled
         slugWawancara={slugWawancara}
         pilihanDivisi={pilihanDivisi}
         wawancara={wawancara}

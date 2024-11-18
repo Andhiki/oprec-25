@@ -53,34 +53,38 @@ const PopupUrutan = ({
   };
 
   const handleSubmit = async () => {
-    if (clickedButtons !== null && !hasMax) {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/divisi/${params}/choose`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ urutanPrioritas: clickedButtons }),
-            credentials: "include",
-          },
-        );
-        const responseJson = await res.json();
-        if (!res.ok) {
-          setErrorMessage(responseJson.message);
-          setShowErrorModal(true);
-        } else {
-          Cookies.set("accessToken", responseJson.accessToken);
-          Cookies.set("refreshToken", responseJson.refreshToken);
-          setShowSuccessModal(true); // Show success modal on success
-        }
-      } catch (error) {
-        setShowErrorModal(true);
-        setErrorMessage("");
-      }
-    }
-  };
+    console.error("Pendaftaran ditutup!")
+  }
+
+  // const handleSubmit = async () => {
+  //   if (clickedButtons !== null && !hasMax) {
+  //     try {
+  //       const res = await fetch(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/divisi/${params}/choose`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({ urutanPrioritas: clickedButtons }),
+  //           credentials: "include",
+  //         },
+  //       );
+  //       const responseJson = await res.json();
+  //       if (!res.ok) {
+  //         setErrorMessage(responseJson.message);
+  //         setShowErrorModal(true);
+  //       } else {
+  //         Cookies.set("accessToken", responseJson.accessToken);
+  //         Cookies.set("refreshToken", responseJson.refreshToken);
+  //         setShowSuccessModal(true); // Show success modal on success
+  //       }
+  //     } catch (error) {
+  //       setShowErrorModal(true);
+  //       setErrorMessage("");
+  //     }
+  //   }
+  // };
 
   const handleClose = () => {
     setShowSuccessModal(false);
@@ -94,7 +98,7 @@ const PopupUrutan = ({
   return (
     <>
       <AlertDialog>
-        <AlertDialogTrigger disabled={hasEnrolled} asChild>
+        <AlertDialogTrigger disabled asChild>
           <Button className="lg:text-md w-full text-sm tracking-wide">
             {hasMax
               ? `Batas pilihan divisi tercapai`
