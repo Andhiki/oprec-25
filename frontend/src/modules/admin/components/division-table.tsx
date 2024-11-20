@@ -92,7 +92,7 @@ const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                 {/* Tanggal Pilihan Hima */}
                 <td>
                   {dipilihHima && user.enrolledSlugHima === admin.username ? (
-                    formatDate(new Date(jamHima))
+                    formatDate(jamHima)
                   ) : (
                     <p className="opacity-50">Belum memilih</p>
                   )}
@@ -101,7 +101,7 @@ const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                 {/* Tanggal Pilihan OTI */}
                 <td>
                   {dipilihOti && user.enrolledSlugOti === admin.username ? (
-                    formatDate(new Date(jamOti))
+                    formatDate(jamOti)
                   ) : (
                     <p className="opacity-50">Belum memilih</p>
                   )}

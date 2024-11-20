@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { toZonedTime } from "date-fns-tz";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -80,14 +81,14 @@ export const HIMAKOM_FAQ = [
 
 // date formatter
 // --------------------------------------------------------------------
-export function formatDate (isoString: Date) {
-    const date = new Date(isoString);
-    return date.toLocaleDateString("id-ID", {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
+export function formatDate(isoString: Date) {
+    const jakartaDate = toZonedTime(new Date(isoString), 'Asia/Jakarta');
+    return jakartaDate.toLocaleDateString("id-ID", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
     });
-  };
+}
 // --------------------------------------------------------------------
