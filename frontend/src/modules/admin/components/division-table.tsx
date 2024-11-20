@@ -2,13 +2,7 @@ import { Button } from "@/components/ui/button";
 import { EyeIcon } from "lucide-react";
 import Link from "next/link";
 
-const DivisionTable = ({
-  allUsers,
-  admin,
-}: {
-  allUsers: any;
-  admin: any;
-}) => {
+const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   const formatDate = (isoString: Date) => {
     const date = new Date(isoString);
     return date.toLocaleDateString("id-ID", {
@@ -33,7 +27,7 @@ const DivisionTable = ({
   return (
     <table className="w-full">
       <thead>
-        <tr className="bg-custom-gray *:px-6 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold *:transition-all">
+        <tr className="bg-custom-gray *:px-4 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold *:transition-all">
           <th className="hover:bg-custom-black/10">No</th>
           <th className="hover:bg-custom-black/10">Nama</th>
           <th className="hover:bg-custom-black/10">Divisi Pilihan</th>
@@ -70,52 +64,57 @@ const DivisionTable = ({
             return (
               <tr
                 key={user._id}
-                className="border-t border-gray-700 transition-all *:px-6 *:py-4 *:text-sm hover:bg-custom-black/20"
+                className="border-t border-gray-700 transition-all *:px-4 *:py-4 *:text-sm hover:bg-custom-black/20"
               >
                 <td className="text-center">{index + 1}</td>
                 <td>{user.username}</td>
-                <td>
+                <td className="space-y-1.5">
                   {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
-                    <ul>
-                      {user.divisiPilihan.map((divisi: any) => (
-                        <li key={divisi._id}>
-                          {(divisi.divisiId?.slug).toUpperCase()} :{" "}
-                          <span
-                            className={
+                    user.divisiPilihan
+                      .slice()
+                      .sort(
+                        (a: any, b: any) =>
+                          a.urutanPrioritas - b.urutanPrioritas,
+                      )
+                      .map((divisi: any) => (
+                        <div
+                          key={divisi._id}
+                          className="flex flex-nowrap items-center"
+                        >
+                          <div
+                            className={`mr-2 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border ${
                               divisi.divisiId.himakom
-                                ? "text-custom-lavender"
-                                : "text-custom-orange"
-                            }
+                                ? "border-custom-lavender text-custom-lavender"
+                                : "border-custom-orange text-custom-orange"
+                            } `}
                           >
                             {divisi.urutanPrioritas}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                          </div>
+                          {divisi.divisiId?.slug.toUpperCase()}
+                        </div>
+                      ))
                   ) : (
-                    <p className="text-sm text-custom-red opacity-80">
-                      Belum memilih divisi
-                    </p>
+                    <p className="opacity-50">Belum memilih</p>
                   )}
                 </td>
 
                 {/* Tanggal Pilihan Hima */}
-                <td className="text-center">
+                <td className="">
                   {dipilihHima && user.enrolledSlugHima === admin.username ? (
                     <>{formatDate(jamHima)}</>
                   ) : (
-                    <p className="text-center opacity-50">Belum memilih</p>
+                    <p className="opacity-50">Belum memilih</p>
                   )}
                 </td>
                 {/* Tanggal Pilihan OTI */}
-                <td className="text-center">
+                <td className="">
                   {dipilihOti && user.enrolledSlugOti === admin.username ? (
                     <>{formatDate(jamOti)}</>
                   ) : (
-                    <p className="text-center opacity-50">Belum memilih</p>
+                    <p className="opacity-50">Belum memilih</p>
                   )}
                 </td>
-                <td className="text-center">
+                <td className="">
                   {user.tugas.length > 0 ? (
                     <Link
                       href={user.tugas[0].link}

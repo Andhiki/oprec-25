@@ -4,7 +4,7 @@ const MakomtiTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
   return (
     <table className="min-w-full overflow-x-auto">
       <thead>
-        <tr className="bg-custom-gray *:px-6 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold *:transition-all">
+        <tr className="bg-custom-gray *:px-4 *:py-3 *:text-start *:text-[0.9rem] *:font-semibold *:transition-all">
           <th className="hover:bg-custom-black/10">No</th>
           <th className="hover:bg-custom-black/10">Username</th>
           <th className="hover:bg-custom-black/10">Divisi Pilihan</th>

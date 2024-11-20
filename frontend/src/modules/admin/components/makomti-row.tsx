@@ -99,18 +99,21 @@ const MakomtiRow = ({ user, index }: MakomtiRowProps) => {
   };
 
   return (
-    <tr key={user._id} className="hover:bg-custom-black/10">
-      <td className="px-4 py-4 text-center">{index + 1}</td>
-      <td className="px-4 py-4 max-w-[200px] text-wrap text-ellipsis overflow-x-hidden">
+    <tr
+      key={user._id}
+      className="border-t border-gray-700 transition-all *:px-4 *:py-4 *:text-sm hover:bg-custom-black/20"
+    >
+      <td className="text-center">{index + 1}</td>
+      <td className="max-w-[200px] overflow-x-hidden text-ellipsis text-wrap">
         {user.username}
       </td>
-      <td className="space-y-1.5 truncate px-4 py-4">
+      <td className="space-y-1.5">
         {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
           user.divisiPilihan
             .slice()
             .sort((a: any, b: any) => a.urutanPrioritas - b.urutanPrioritas)
             .map((divisi: any) => (
-              <div key={divisi._id}>
+              <div key={divisi._id} className="flex flex-nowrap items-center">
                 <div
                   className={`mr-2 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border ${
                     divisi.divisiId.himakom
@@ -124,82 +127,80 @@ const MakomtiRow = ({ user, index }: MakomtiRowProps) => {
               </div>
             ))
         ) : (
-          <p className="text-center text-custom-red opacity-80">
-            Belum memilih divisi
-          </p>
+          <p className="opacity-50">Belum memilih</p>
         )}
       </td>
-      <td className="px-4 py-4 text-center">
+      <td>
         {dipilihHima ? (
           formatDate(jamHima)
         ) : (
           <p className="opacity-50">Belum memilih</p>
         )}
       </td>
-      <td className="px-4 py-4 text-center">
+      <td>
         {dipilihOti ? (
           formatDate(jamOti)
         ) : (
           <p className="opacity-50">Belum memilih</p>
         )}
       </td>
-      <td className="px-4 py-4">
+      <td>
         {!user.diterimaDi ? (
           <td className="flex items-center gap-2">
-              <Select
-                value={selectedDivision[user._id] || ""}
-                onValueChange={(value) => handleDivisionChange(user._id, value)}
-              >
-                <SelectTrigger className="w-[150px] overflow-hidden text-ellipsis">
-                  <SelectValue placeholder="Pilih divisi" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {user.divisiPilihan.length > 0 ? (
-                      user.divisiPilihan.map((divisi: any) => (
-                        <SelectItem
-                          key={divisi._id}
-                          className="text-[0.7rem]"
-                          value={divisi.divisiId?._id || ""}
-                        >
-                          {divisi.divisiId?.judul || ""}
-                        </SelectItem>
-                      ))
-                    ) : (
-                      <SelectLabel className="text-[0.7rem] font-normal text-custom-black/80">
-                        Tidak mendaftar
-                      </SelectLabel>
-                    )}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+            <Select
+              value={selectedDivision[user._id] || ""}
+              onValueChange={(value) => handleDivisionChange(user._id, value)}
+            >
+              <SelectTrigger className="w-[150px] overflow-hidden text-ellipsis">
+                <SelectValue placeholder="Pilih divisi" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {user.divisiPilihan.length > 0 ? (
+                    user.divisiPilihan.map((divisi: any) => (
+                      <SelectItem
+                        key={divisi._id}
+                        className="text-[0.7rem]"
+                        value={divisi.divisiId?._id || ""}
+                      >
+                        {divisi.divisiId?.judul || ""}
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <SelectLabel className="text-[0.7rem] font-normal text-custom-black/80">
+                      Tidak mendaftar
+                    </SelectLabel>
+                  )}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
 
             {approved ? (
-
-          <p className="text-sm">
-            Sudah diterima di{" "}
-            <span className="text-custom-orange">{user.diterimaDi.judul}</span>
-          </p>
+              <p className="text-sm">
+                Sudah diterima di{" "}
+                <span className="text-custom-orange">
+                  {user.diterimaDi.judul}
+                </span>
+              </p>
             ) : (
-
-            <Button
-              variant="whiteOutline"
-              onClick={() =>
-                handleApprove(user._id, selectedDivision[user._id])
-              }
-              disabled={
-                currentDateParah < mubesDate ||
-                pending ||
-                !selectedDivision[user._id]
-              }
-              className="p-3"
-            >
-              {pending ? (
-                <LoaderCircle size={16} className="animate-spin" />
-              ) : (
-                <UserRoundCheck size={16} />
-              )}
-            </Button>
+              <Button
+                variant="whiteOutline"
+                onClick={() =>
+                  handleApprove(user._id, selectedDivision[user._id])
+                }
+                disabled={
+                  currentDateParah < mubesDate ||
+                  pending ||
+                  !selectedDivision[user._id]
+                }
+                className="p-3"
+              >
+                {pending ? (
+                  <LoaderCircle size={16} className="animate-spin" />
+                ) : (
+                  <UserRoundCheck size={16} />
+                )}
+              </Button>
             )}
           </td>
         ) : (
