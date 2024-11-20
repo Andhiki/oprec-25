@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Octagon, MessageSquare, MailWarning } from "lucide-react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -77,4 +76,18 @@ export const HIMAKOM_FAQ = [
     answer: "Ya, HIMAKOM dikhususkan untuk mahasiswa Ilmu Komputer. Namun, dalam beberapa kegiatan, kami membuka kolaborasi dengan jurusan lain.",
   },
 ];
+// --------------------------------------------------------------------
+
+// date formatter
+// --------------------------------------------------------------------
+export function formatDate (isoString: Date) {
+    const date = new Date(isoString);
+    return date.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
 // --------------------------------------------------------------------
