@@ -145,13 +145,12 @@ const MakomtiRow = ({ user, index }: MakomtiRowProps) => {
       </td>
       <td className="px-4 py-4">
         {!user.diterimaDi ? (
-          <div className="flex items-center gap-2">
-            <div className="relative w-full min-w-[6.9rem] max-w-[10rem]">
+          <td className="flex items-center gap-2">
               <Select
                 value={selectedDivision[user._id] || ""}
                 onValueChange={(value) => handleDivisionChange(user._id, value)}
               >
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="w-[150px] overflow-hidden text-ellipsis">
                   <SelectValue placeholder="Pilih divisi" />
                 </SelectTrigger>
                 <SelectContent>
@@ -174,8 +173,6 @@ const MakomtiRow = ({ user, index }: MakomtiRowProps) => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-custom-silver" />
-            </div>
 
             {approved ? (
 
@@ -204,7 +201,7 @@ const MakomtiRow = ({ user, index }: MakomtiRowProps) => {
               )}
             </Button>
             )}
-          </div>
+          </td>
         ) : (
           <p className="text-sm">
             Sudah diterima di{" "}
