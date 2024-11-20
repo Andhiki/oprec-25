@@ -1,19 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { formatDate } from "@/lib/utils";
 import { EyeIcon } from "lucide-react";
 import Link from "next/link";
 
 const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
-  const formatDate = (isoString: Date) => {
-    const date = new Date(isoString);
-    return date.toLocaleDateString("id-ID", {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   const getDipilihOlehAndJam = (sesi: any[], userId: string) => {
     const sesiMatched = sesi?.find((sesiItem) =>
       sesiItem.dipilihOleh?.includes(userId),
@@ -67,7 +57,9 @@ const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                 className="border-t border-gray-700 transition-all *:px-4 *:py-4 *:text-sm hover:bg-custom-black/20"
               >
                 <td className="text-center">{index + 1}</td>
+
                 <td>{user.username}</td>
+                
                 <td className="space-y-1.5">
                   {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
                     user.divisiPilihan
@@ -99,22 +91,24 @@ const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                 </td>
 
                 {/* Tanggal Pilihan Hima */}
-                <td className="">
+                <td>
                   {dipilihHima && user.enrolledSlugHima === admin.username ? (
                     <>{formatDate(jamHima)}</>
                   ) : (
                     <p className="opacity-50">Belum memilih</p>
                   )}
                 </td>
+
                 {/* Tanggal Pilihan OTI */}
-                <td className="">
+                <td>
                   {dipilihOti && user.enrolledSlugOti === admin.username ? (
                     <>{formatDate(jamOti)}</>
                   ) : (
                     <p className="opacity-50">Belum memilih</p>
                   )}
                 </td>
-                <td className="">
+
+                <td>
                   {user.tugas.length > 0 ? (
                     <Link
                       href={user.tugas[0].link}

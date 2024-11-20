@@ -55,7 +55,7 @@ const AdminDashboard = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
         </div>
       </div>
 
-      <div className="overflow-x-scroll rounded-lg bg-custom-gray-dark">
+      <div className="overflow-x-auto rounded-lg bg-custom-gray-dark">
         <div className="px-6 py-4 text-lg font-semibold">
           Informasi Pendaftar
         </div>
