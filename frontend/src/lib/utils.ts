@@ -80,14 +80,17 @@ export const HIMAKOM_FAQ = [
 
 // date formatter
 // --------------------------------------------------------------------
-export function formatDate (isoString: Date) {
-    const date = new Date(isoString);
-    return date.toLocaleDateString("id-ID", {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
+export function formatDate(isoString: Date) {
+  // Force the date to be interpreted in local timezone
+  const date = new Date(new Date(isoString).toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
+  
+  return date.toLocaleDateString("id-ID", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: 'Asia/Jakarta'
+  });
+}
 // --------------------------------------------------------------------

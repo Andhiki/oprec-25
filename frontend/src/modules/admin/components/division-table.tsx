@@ -59,7 +59,6 @@ const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                 <td className="text-center">{index + 1}</td>
 
                 <td>{user.username}</td>
-                
                 <td className="space-y-1.5">
                   {user.divisiPilihan && user.divisiPilihan.length > 0 ? (
                     user.divisiPilihan
@@ -93,7 +92,7 @@ const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                 {/* Tanggal Pilihan Hima */}
                 <td>
                   {dipilihHima && user.enrolledSlugHima === admin.username ? (
-                    <>{formatDate(jamHima)}</>
+                    formatDate(jamHima)
                   ) : (
                     <p className="opacity-50">Belum memilih</p>
                   )}
@@ -102,7 +101,7 @@ const DivisionTable = ({ allUsers, admin }: { allUsers: any; admin: any }) => {
                 {/* Tanggal Pilihan OTI */}
                 <td>
                   {dipilihOti && user.enrolledSlugOti === admin.username ? (
-                    <>{formatDate(jamOti)}</>
+                    formatDate(jamOti)
                   ) : (
                     <p className="opacity-50">Belum memilih</p>
                   )}
