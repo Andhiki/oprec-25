@@ -10,11 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Logos } from "@/utils/types";
-export default function PopupPengumuman({
-  className,
-  diterimaDi,
-}: any) {
-
+export default function PopupPengumuman({ className, diterimaDi }: any) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -45,7 +41,7 @@ export default function PopupPengumuman({
           {diterimaDi ? (
             <>
               <p className="text-[0.9rem]">Kamu berhasil diterima di divisi</p>
-              <AlertDialogTitle className="mb-8 mt-3 text-xl sm:text-2xl">
+              <AlertDialogTitle className="mx-2 mb-8 mt-1 text-xl sm:text-3xl">
                 {diterimaDi.judulPanjang}
               </AlertDialogTitle>
               <p className="text-[0.9rem]">
@@ -54,9 +50,9 @@ export default function PopupPengumuman({
             </>
           ) : (
             <>
-              <p className="mb-10 text-[0.9rem] sm:mb-12 lg:mb-14">
+              <AlertDialogTitle className="mb-8 mt-3 text-xl">
                 Maaf kamu belum diterima dalam <br /> periode rekruitmen ini
-              </p>
+              </AlertDialogTitle>
               <p className="text-[0.9rem]">
                 Jangan menyerah dan tetap semangat!
               </p>
@@ -68,23 +64,19 @@ export default function PopupPengumuman({
           {diterimaDi ? (
             <>
               <AlertDialogCancel className="mt-0" asChild>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full text-[0.9rem] lg:w-1/2"
-                >
+                <Button variant="outline" size="lg" className="w-full lg:w-1/2">
                   Kembali
                 </Button>
               </AlertDialogCancel>
               <AlertDialogAction asChild>
-                <Button size="lg" className="w-full text-[0.9rem] lg:w-1/2">
+                <Button size="lg" className="w-full lg:w-1/2">
                   Grup
                 </Button>
               </AlertDialogAction>
             </>
           ) : (
             <AlertDialogAction asChild>
-              <Button size="lg" className="w-full text-[0.9rem]">
+              <Button size="lg" className="w-full">
                 Selesai
               </Button>
             </AlertDialogAction>
