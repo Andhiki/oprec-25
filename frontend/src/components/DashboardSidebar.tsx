@@ -31,12 +31,12 @@ const DashboardSidebar = ({ admin = false }: { admin?: boolean }) => {
           tag: "Wawancara",
           newTab: false,
         },
-        // {
-        //   icon: <MailWarning className="h-5 shrink-0" />,
-        //   href: "/pengumuman",
-        //   tag: "Pengumuman",
-        //   newTab: false,
-        // },
+        {
+          icon: <MailWarning className="h-5 shrink-0" />,
+          href: "/pengumuman",
+          tag: "Pengumuman",
+          newTab: false,
+        },
         {
           icon: <CircleHelp className="h-5 shrink-0" />,
           href: "https://wa.me/6289603375791",

@@ -38,12 +38,12 @@ const DashboardNavbar: React.FC<DashboardNavbarProps> = ({ admin = false }) => {
           tag: "Wawancara",
           newTab: false,
         },
-        // {
-        //   icon: <MailWarning className="h-5 shrink-0" />,
-        //   href: "/pengumuman",
-        //   tag: "Pengumuman",
-        //   newTab: false,
-        // },
+        {
+          icon: <MailWarning className="h-5 shrink-0" />,
+          href: "/pengumuman",
+          tag: "Pengumuman",
+          newTab: false,
+        },
       ];
 
   return (
