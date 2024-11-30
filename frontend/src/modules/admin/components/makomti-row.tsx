@@ -179,7 +179,7 @@ const MakomtiRow = ({ user, index }: MakomtiRowProps) => {
               <p className="text-sm">
                 Sudah diterima di{" "}
                 <span className="text-custom-orange">
-                  {user.diterimaDi.judul}
+                  {user.diterimaDi?.judul}
                 </span>
               </p>
             ) : (
@@ -206,7 +206,7 @@ const MakomtiRow = ({ user, index }: MakomtiRowProps) => {
         ) : (
           <p className="text-sm">
             Sudah diterima di{" "}
-            <span className="text-custom-orange">{user.diterimaDi.judul}</span>
+            <span className="text-custom-orange">{user.diterimaDi?.judul}</span>
           </p>
         )}
       </td>
