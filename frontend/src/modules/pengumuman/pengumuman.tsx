@@ -12,8 +12,8 @@ const Pengumuman = async () => {
   const currentDate = new Date();
   console.log(`pengumuman.tsx: releaseDate: ${releaseDate}`);
 
-  const isAnnouncementAvailable = currentDate >= releaseDate;
-  // const isAnnouncementAvailable = true;
+  // const isAnnouncementAvailable = currentDate >= releaseDate;
+  const isAnnouncementAvailable = true;
 
   return (
     <main className="space-y-8">
