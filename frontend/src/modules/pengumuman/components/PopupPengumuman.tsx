@@ -69,7 +69,11 @@ export default function PopupPengumuman({ className, diterimaDi }: any) {
                 </Button>
               </AlertDialogCancel>
               <AlertDialogAction asChild>
-                <Button size="lg" className="w-full lg:w-1/2">
+                <Button 
+                  ref={diterimaDi.himakom ? "https://line.me/ti/g/gNSyy59_RZ" : "https://chat.whatsapp.com/FhlKtDCYd0ZEYThKqjVJvt"} 
+                  size="lg" 
+                  className="w-full text-[0.9rem] lg:w-1/2"
+                >
                   Grup
                 </Button>
               </AlertDialogAction>

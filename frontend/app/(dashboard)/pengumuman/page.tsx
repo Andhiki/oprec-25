@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Pengumuman",
-  description: "ISINYA PENGUMUMAN DEH",
+  description: "Pengumuman Open Recruitment Himakom & OmahTI",
 };
 
 export default function Page(): JSX.Element {
