@@ -24,7 +24,7 @@ const Pengumuman = async () => {
 
       <div className="flex h-96 flex-col items-center justify-center gap-4 rounded-xl bg-custom-gray-dark p-6">
         <Smile size={100} />
-        {!isAnnouncementAvailable ? (
+        {isAnnouncementAvailable ? (
           <>
             <h1 className="text-center text-xl font-medium">
               Kamu dapat membuka pengumuman
