@@ -70,13 +70,22 @@ export default function PopupPengumuman({ className, diterimaDi }: any) {
                 </Button>
               </AlertDialogCancel>
               <AlertDialogAction asChild>
-                <a 
-                  href={diterimaDi.himakom ? "https://line.me/ti/g/gNSyy59_RZ" : "https://chat.whatsapp.com/FhlKtDCYd0ZEYThKqjVJvt"} 
-                  size="lg" 
-                  className="w-full text-[0.9rem] lg:w-1/2"
+                <Link
+                  href={
+                    diterimaDi.himakom
+                      ? "https://line.me/ti/g/gNSyy59_RZ"
+                      : "https://chat.whatsapp.com/FhlKtDCYd0ZEYThKqjVJvt"
+                  }
+                  passHref
                 >
-                  Grup
-                </a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full text-[0.9rem] lg:w-1/2 block bg-gray-200 p-4 text-center rounded-lg"
+                  >
+                    Grup
+                  </a>
+                </Link>
               </AlertDialogAction>
             </>
           ) : (
