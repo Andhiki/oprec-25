@@ -78,12 +78,11 @@ export default function PopupPengumuman({ className, diterimaDi }: any) {
                       : "https://chat.whatsapp.com/FhlKtDCYd0ZEYThKqjVJvt"
                   }
                   passHref
-                  className="w-full text-[0.9rem] lg:w-1/2 block bg-gray-200 p-4 text-center rounded-lg"
+                  className="w-full text-[0.9rem] lg:w-1/2 block p-4 text-center rounded-lg"
                 >
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-black"
                   >
                     Grup
                   </a>
