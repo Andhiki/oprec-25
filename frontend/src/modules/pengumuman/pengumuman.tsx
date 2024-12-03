@@ -8,7 +8,7 @@ const Pengumuman = async () => {
   const accessToken = cookies().get("accessToken")?.value;
   const { diterimaDi } = await getPenerimaanUser(accessToken as string);
   // Set your announcement release date here
-  const releaseDate = new Date("2024-12-04T17:00:00Z");
+  const releaseDate = new Date("2024-12-04T10:00:00Z");
   const currentDate = new Date();
   console.log(`pengumuman.tsx: releaseDate: ${releaseDate}`);
 
